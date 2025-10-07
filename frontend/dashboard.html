@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Forge Medias</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa; 
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 20px;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #1e3c72; 
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-content {
+            flex: 1;
+        }
+        .welcome-banner {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .service-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #1e3c72;
+        }
+        .orders-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #1e3c72;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .nav-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: #1e3c72;
+            font-weight: 500;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-in-progress { background: #cce7ff; color: #004085; }
+        .status-completed { background: #d4edda; color: #155724; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">Forge Medias</div>
+            <div class="user-menu">
+                <span>Welcome, John Smith</span>
+                <span>Professional Plan</span>
+                <button class="btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="nav-item active">Dashboard</div>
+            <div class="nav-item">File Upload</div>
+            <div class="nav-item">My Orders</div>
+            <div class="nav-item">Knowledge Base</div>
+            <div class="nav-item">Account Settings</div>
+            <div class="nav-item">Billing & Subscription</div>
+        </div>
+
+        <div class="main-content">
+            <div class="welcome-banner">
+                <h1>Good Morning, John</h1>
+                <p>Welcome back to your Forge Medias workspace. You have 864 minutes remaining this month.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Transcript Cleanup</h3>
+                    <p>Professional cleaning and formatting of transcription files. Upload your raw transcripts for expert cleanup.</p>
+                    <p><strong>Turnaround:</strong> 24-48 hours</p>
+                    <button class="btn" onclick="openUploadModal('transcript_cleanup')">Upload Files</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Captions & Subtitles Cleanup</h3>
+                    <p>Clean and synchronize caption files for your videos. Perfect timing and formatting guaranteed.</p>
+                    <p><strong>Turnaround:</strong> 24 hours</p>
+                    <button class="btn" onclick="openUploadModal('captions_cleanup')">Upload Files</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Dubbing & Voiceover</h3>
+                    <p>Professional voiceover services and audio dubbing. Multiple languages available.</p>
+                    <p><strong>Turnaround:</strong> 48-72 hours</p>
+                    <button class="btn" onclick="openUploadModal('dubbing_voiceover')">Upload Files</button>
+                </div>
+            </div>
+
+            <div class="orders-section">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Service</th>
+                            <th>File</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ORD-001</td>
+                            <td>Transcript Cleanup</td>
+                            <td>client_interview_october.mp4</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>2024-10-05</td>
+                        </tr>
+                        <tr>
+                            <td>ORD-002</td>
+                            <td>Captions Cleanup</td>
+                            <td>product_demo_video.mp4</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td>2024-10-06</td>
+                        </tr>
+                        <tr>
+                            <td>ORD-003</td>
+                            <td>Dubbing & Voiceover</td>
+                            <td>training_material.mp4</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>2024-10-07</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px;">
+            <h3>Upload Files for <span id="serviceName"></span></h3>
+            <form id="uploadForm">
+                <input type="file" id="fileInput" style="margin: 15px 0; width: 100%;">
+                <textarea id="instructions" placeholder="Special instructions (optional)" style="width: 100%; height: 100px; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn">Submit Order</button>
+                    <button type="button" class="btn" style="background: #6c757d;" onclick="closeUploadModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentService = '';
+
+        function openUploadModal(serviceType) {
+            currentService = serviceType;
+            const serviceNames = {
+                'transcript_cleanup': 'Transcript Cleanup',
+                'captions_cleanup': 'Captions & Subtitles Cleanup', 
+                'dubbing_voiceover': 'Dubbing & Voiceover'
+            };
+            document.getElementById('serviceName').textContent = serviceNames[serviceType];
+            document.getElementById('uploadModal').style.display = 'flex';
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+        }
+
+        document.getElementById('uploadForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const instructions = document.getElementById('instructions').value;
+            
+            if (!fileInput.files[0]) {
+                alert('Please select a file');
+                return;
+            }
+
+            // Simulate file upload
+            alert('Order submitted successfully! Our team will begin processing your file.');
+            closeUploadModal();
+        };
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('uploadModal').onclick = function(e) {
+            if (e.target === this) closeUploadModal();
+        };
+    </script>
+</body>
+</html>
