@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: forge-media-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: TRANSCRIPTOR_API_KEY
+        value: 2e9ddcf1379f4ee93c3de65a55944e7652e71ea346a5ccc78c035a6d60d0585fea58a8425766c3594ca9b4d80b9dc5e8bd834727e90fa49b6d0a2f7da02ed4c9
