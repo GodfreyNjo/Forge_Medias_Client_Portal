@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 import os
@@ -7,12 +8,13 @@ from datetime import datetime
 
 app = FastAPI(title="Forge Media Portal API", version="1.0.0")
 
-# Get allowed origins from environment
-frontend_url = os.getenv('FRONTEND_URL', 'https://forge-media-frontend.onrender.com')
+# Serve frontend static files
+app.mount("/", StaticFiles(directory="frontend/.next", html=True), name="static")
 
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url, "http://localhost:3000"],
+    allow_origins=["*"],  # For production, you might want to restrict this
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -68,27 +70,11 @@ mock_files = [
         uploadedAt="07/10/2025",
         status="Processing"
     ),
-    File(
-        id="07f1a7beab540b31c299ddb9d52fe81eadiLPWTk-mp4",
-        fileName="weekly_briefing_audio.mp3",
-        uploadedAt="06/10/2025",
-        status="Transcription"
-    ),
-    File(
-        id="a1b2c3d4e5f6789012345678901234567example-mp4",
-        fileName="conference_presentation.mp4",
-        uploadedAt="05/10/2025",
-        status="Completed"
-    ),
 ]
 
 @app.get("/")
 async def root():
-    return {
-        "message": "Forge Media Portal API - Live!",
-        "status": "healthy",
-        "timestamp": datetime.now().isoformat()
-    }
+    return {"message": "Forge Media Portal - Full Stack Application"}
 
 @app.get("/api/dashboard")
 async def get_dashboard():
@@ -106,15 +92,6 @@ async def health_check():
         "version": "1.0.0",
         "timestamp": datetime.now().isoformat()
     }
-
-# New endpoints for future features
-@app.get("/api/files")
-async def get_files():
-    return {"files": mock_files, "total": len(mock_files)}
-
-@app.post("/api/files/upload")
-async def upload_file():
-    return {"message": "File upload endpoint ready", "status": "success"}
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - FRONTEND_URL=http://localhost:3000
+      - BACKEND_URL=http://localhost:8000
+      - TRANSCRIPTOR_API_KEY=2e9ddcf1379f4ee93c3de65a55944e7652e71ea346a5ccc78c035a6d60d0585fea58a8425766c3594ca9b4d80b9dc5e8bd834727e90fa49b6d0a2f7da02ed4c9
+    restart: unless-stopped
