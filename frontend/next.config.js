@@ -4,14 +4,7 @@ const nextConfig = {
   env: {
     BACKEND_URL: process.env.BACKEND_URL || 'https://forge-media-backend.onrender.com',
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://forge-media-backend.onrender.com/api/:path*',
-      },
-    ]
-  }
+  // Remove rewrites for now to simplify
 }
 
 module.exports = nextConfig
