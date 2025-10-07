@@ -1,0 +1,14 @@
+{
+  "name": "forge-media-portal",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && source venv/bin/activate && python main.py",
+    "build": "echo 'Build complete'",
+    "install:all": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
